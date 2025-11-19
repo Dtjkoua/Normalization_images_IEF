@@ -1,0 +1,43 @@
+# PROMPT RAPIDE POUR GOOGLE COLAB
+
+## Installation des dépendances
+!pip install numpy opencv-python pillow scikit-image scipy matplotlib tqdm
+
+## Télécharger les fichiers (depuis Drive ou autre source)
+# Option 1 : Depuis Drive
+from google.colab import drive
+drive.mount('/content/drive')
+!cp "/content/drive/MyDrive/chemin/normalization_ief.py" /content/
+!cp "/content/drive/MyDrive/chemin/test_5_images_colab.py" /content/
+
+# Option 2 : Télécharger depuis URL
+# !wget https://votre-url.com/normalization_ief.py
+# !wget https://votre-url.com/test_5_images_colab.py
+
+## Télécharger le dataset
+# Option 1 : Depuis Drive
+!cp -r "/content/drive/MyDrive/chemin/dataset" /content/
+
+# Option 2 : Depuis ZIP
+from google.colab import files
+uploaded = files.upload()  # Sélectionnez votre ZIP
+!unzip votre_dataset.zip -d /content/
+
+## Configurer le script (éditez test_5_images_colab.py)
+# Modifiez la section CONFIGURATION :
+# - DATASET_PATH = "/content/dataset"
+# - SPLIT = "TestSet"
+# - SAMPLES_PER_CLASS = 5
+
+## Exécuter le script
+exec(open('test_5_images_colab.py').read())
+
+## Visualiser les résultats
+from IPython.display import Image, display
+display(Image("/content/test_normalization_results/AF/image1_comparison.png"))
+
+## Télécharger les résultats
+!zip -r /content/results.zip /content/test_normalization_results
+from google.colab import files
+files.download('/content/results.zip')
+
